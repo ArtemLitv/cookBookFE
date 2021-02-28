@@ -6,7 +6,8 @@ import {
 import { cache } from "./cache";
 import React from "react";
 import ReactDOM from "react-dom";
-import Recipe from "./recipe/recipe";
+import App from "./App";
+import "./index.css";
 
 // Initialize ApolloClient
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
@@ -17,7 +18,7 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
 // Pass the ApolloClient instance to the ApolloProvider component
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <Recipe />
+    <App />
   </ApolloProvider>,
   document.getElementById("root")
 );
