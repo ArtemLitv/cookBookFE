@@ -6,6 +6,8 @@ import {
 import { cache } from "./cache";
 import React from "react";
 import ReactDOM from "react-dom";
+import { Provider } from 'react-redux'
+import store from "./store";
 import App from "./App";
 import "./index.css";
 
@@ -18,7 +20,9 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
 // Pass the ApolloClient instance to the ApolloProvider component
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </ApolloProvider>,
   document.getElementById("root")
 );

@@ -1,7 +1,13 @@
-.recipe-main__header {
+.recipe-main {
+  &__wrapper {
+    margin: 0 16px;
+  }
+
+  &__header {
     text-transform: uppercase;
     text-align: center;
     font-weight: lighter;
     font-size: 2em;
     padding: 10px;
+  }
 }
