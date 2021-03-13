@@ -18,14 +18,12 @@ const RecipeMainHeader: FC<RecipeMainHeaderProps> = ({ header, headerChange }) =
   const onEditClick = (event: any) => {
     setVisibleEditor((currentState) => !currentState);
     if (visibleEditor) {
-        console.log('>>>', visibleEditor)
         headerChange(headerValue);
     }
   };
 
   const onBlurInput = () => {
       setVisibleEditor(false);
-      console.log('>>>')
       headerChange(headerValue);
   }
 

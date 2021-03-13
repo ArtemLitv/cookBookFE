@@ -56,11 +56,8 @@ const RecipeMain: FC<RecipeMainProps> = ({ selectedRecipe }) => {
 
   
   useEffect(() => {
-    console.log("recipeCaption", recipeCaption, caption);
     setRecipeCaption(caption);
   }, [caption]);
-
-  console.log("log", over);
 
   const headerChange = (caption: string) => {
     setRecipeCaption(caption);
