@@ -3,6 +3,7 @@ import React, { FC, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RecipeType } from "../models/RecipeType";
 import { RootState } from "../store";
+import RecipeMainBody from "./components/RecipeMainBody/RecipeMainBody";
 import RecipeMainHeader from "./components/RecipeMainHeader/RecipeMainHeader";
 import "./RecipeMain.scss";
 
@@ -41,28 +42,43 @@ type RecipeMainProps = {
   selectedRecipe?: RecipeType;
 };
 
-const RecipeMain: FC<RecipeMainProps> = ({ selectedRecipe }) => {
+const RecipeMain: FC<RecipeMainProps> = () => {
   const selectedId = useSelector((state: RootState) => state.menu.id);
 
   const { data, loading, error } = useQuery(RESIPIE, {
     variables: { recipeId: selectedId },
   });
+
   const caption = data?.recipe?.recipe?.caption;
   const body = data?.recipe?.recipe?.body;
 
   const [recipeCaption, setRecipeCaption] = useState(caption);
-  
-  const [onRenameMutator, over] = useMutation(UPDATE_RECIPE_CAPTION);
+  const [recipeBody, setRecipeBody] = useState(body);
+  const [editMode, setEditMode] = useState(false);
 
-  
+  const [onRenameMutator] = useMutation(UPDATE_RECIPE_CAPTION);
+
   useEffect(() => {
     setRecipeCaption(caption);
-  }, [caption]);
+    setRecipeBody(body);
+  }, [caption, body]);
 
-  const headerChange = (caption: string) => {
-    setRecipeCaption(caption);
-    onRenameMutator({variables: {renameRicipeId: selectedId, renameRicipeNewName: caption}});
-  };
+  useEffect(() => {
+    if (editMode) {
+      onRenameMutator({
+        variables: {
+          renameRicipeId: selectedId,
+          renameRicipeNewName: recipeCaption,
+        },
+      });
+    }
+  }, [recipeCaption, recipeBody]);
+
+  const headerChange = (caption: string) => setRecipeCaption(caption);
+
+  const editHandler = (isEdit: boolean) => setEditMode(isEdit);
+
+  const bodyChange = (body: string) => setRecipeBody(body);
 
   if (!selectedId) {
     return <h1 className="recipe-main__header">Start Page</h1>;
@@ -71,8 +87,16 @@ const RecipeMain: FC<RecipeMainProps> = ({ selectedRecipe }) => {
   if (recipeCaption && body) {
     return (
       <div className="recipe-main__wrapper">
-        <RecipeMainHeader header={recipeCaption} headerChange={headerChange} />
-        <p>{body}</p>
+        <RecipeMainHeader
+          header={recipeCaption}
+          headerChange={headerChange}
+          editHandler={editHandler}
+        />
+        <RecipeMainBody
+          body={recipeBody}
+          bodyChange={bodyChange}
+          isEdit={editMode}
+        />
       </div>
     );
   }

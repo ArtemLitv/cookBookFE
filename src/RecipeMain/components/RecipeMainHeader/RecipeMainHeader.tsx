@@ -5,33 +5,31 @@ import "./RecipeMainHeader.scss";
 type RecipeMainHeaderProps = {
   header: string;
   headerChange: (header: string) => void;
+  editHandler: (isEdit: boolean) => void;
 };
 
-const RecipeMainHeader: FC<RecipeMainHeaderProps> = ({ header, headerChange }) => {
+const RecipeMainHeader: FC<RecipeMainHeaderProps> = (props) => {
+  const { header, headerChange, editHandler } = props;
   const [headerValue, setHeaderValue] = useState(header);
-  const [visibleEditor, setVisibleEditor] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
 
   const onValueInput = (event: ChangeEvent<HTMLInputElement>) => {
     setHeaderValue(event.target.value);
   };
 
-  const onEditClick = (event: any) => {
-    setVisibleEditor((currentState) => !currentState);
-    if (visibleEditor) {
-        headerChange(headerValue);
-    }
-  };
-
-  const onBlurInput = () => {
-      setVisibleEditor(false);
+  const onEditClick = () => {
+    setIsEdit((currentState) => !currentState);
+    if (isEdit) {
       headerChange(headerValue);
-  }
+    }
+    editHandler(isEdit);
+  };
 
   return (
     <div className="recipe-main-header__wrapper">
-      <div
-        className={`recipe-main-header__container ${!visibleEditor || "_hide"}`}
-      >
+      <h1>{isEdit.toString()}</h1>
+
+      <div className={`recipe-main-header__container ${isEdit && "_hide"}`}>
         <h1 className="recipe-main-header__header">{headerValue}</h1>
         <button className="recipe-main-header__button" onClick={onEditClick}>
           <PenIcon
@@ -42,16 +40,16 @@ const RecipeMainHeader: FC<RecipeMainHeaderProps> = ({ header, headerChange }) =
         </button>
       </div>
 
-      <div
-        className={`recipe-main-header__container ${visibleEditor || "_hide"}`}
-      >
+      <div className={`recipe-main-header__container ${!isEdit && "_hide"}`}>
         <input
           className="recipe-main-header__header _input"
           value={headerValue}
           onInput={onValueInput}
-          onBlur={onBlurInput}
         />
-        <button className="recipe-main-header__button" onClick={onEditClick}>
+        <button
+          className="recipe-main-header__button _no-hide"
+          onClick={onEditClick}
+        >
           <PenIcon
             className="recipe-main-header__icon"
             width="16"
