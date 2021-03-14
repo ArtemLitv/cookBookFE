@@ -1,14 +1,23 @@
 import React from "react";
-import './recipeSideMenu.scss';
-import {RecipeType} from '../../../models/RecipeType';
+import "./recipeSideMenu.scss";
+import { RecipeType } from "../../../models/RecipeType";
 import { useDispatch } from "react-redux";
-import {select} from '../../../slicers/menuSlice';
+import { select } from "../../../slicers/menu.slice";
+import { changeMode } from "../../../slicers/editMode.slice";
 
-type RecipeSideMenuProps = RecipeType;
-
-const RecipeSideMenu: React.FC<RecipeSideMenuProps> = ({id, caption}: RecipeSideMenuProps) => {
+const RecipeSideMenu: React.FC<RecipeType> = (props: RecipeType) => {
+  const { id, caption } = props;
   const dispatch = useDispatch();
-  return <div className="recipe-side-menu" onClick={()=> dispatch(select(id))}>{caption}</div>;
+  
+  const clickHandler = () => {
+    dispatch(select(id));
+    dispatch(changeMode(false));
+  };
+  return (
+    <div className="recipe-side-menu" onClick={clickHandler}>
+      {caption}
+    </div>
+  );
 };
 
 export default RecipeSideMenu;

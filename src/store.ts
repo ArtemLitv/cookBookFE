@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
-import menuReducer from './slicers/menuSlice';
+import menuReducer from './slicers/menu.slice';
+import editModeReducer from './slicers/editMode.slice';
 
 const store = configureStore({
   reducer: {
-    menu: menuReducer
+    menu: menuReducer,
+    editMode: editModeReducer
   }
 });
 
