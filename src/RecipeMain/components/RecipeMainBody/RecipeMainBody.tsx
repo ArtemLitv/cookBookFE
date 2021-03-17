@@ -18,8 +18,8 @@ const RecipeMainBody: FC<RecipeMainBodyProps> = (props) => {
     bodyChange(event.target.value);
   };
 
-  const content = <p>{body}</p>;
-  const editContent = <textarea value={body} onInput={inputHandler}></textarea>;
+  const content = <p className="recipe-main-body__content">{body}</p>;
+  const editContent = <textarea className="recipe-main-body__edittor" value={body} onInput={inputHandler}></textarea>;
 
   return <>{editMode ? editContent : content}</>;
 };

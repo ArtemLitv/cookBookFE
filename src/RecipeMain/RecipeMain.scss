@@ -1,6 +1,9 @@
 .recipe-main {
   &__wrapper {
     margin: 0 16px;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    grid-gap: 20px;
   }
 
   &__header {
