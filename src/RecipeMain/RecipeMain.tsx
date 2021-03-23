@@ -21,12 +21,13 @@ const RESIPIE = gql`
   }
 `;
 
-const UPDATE_RECIPE_CAPTION = gql`
-  mutation RenameRicipeMutation(
-    $renameRicipeId: ID!
-    $renameRicipeNewName: String!
+const EDIT_RICIPE = gql`
+  mutation editRecipeMutation(
+    $ricipeId: ID!
+    $ricipeNewName: String
+    $recipeNewBody: String
   ) {
-    renameRicipe(id: $renameRicipeId, newName: $renameRicipeNewName) {
+    editRecipe(id: $ricipeId, newName: $ricipeNewName, newBody: $recipeNewBody) {
       succsess
       message
       recipe {
@@ -56,7 +57,7 @@ const RecipeMain: FC<RecipeMainProps> = () => {
   const [recipeBody, setRecipeBody] = useState(body);
   const [editMode, setEditMode] = useState(false);
 
-  const [onRenameMutator] = useMutation(UPDATE_RECIPE_CAPTION);
+  const [onEditMutator] = useMutation(EDIT_RICIPE);
 
   useEffect(() => {
     setRecipeCaption(caption);
@@ -65,14 +66,17 @@ const RecipeMain: FC<RecipeMainProps> = () => {
 
   useEffect(() => {
     if (editMode) {
-      onRenameMutator({
+      console.log('edit')
+      onEditMutator({
         variables: {
-          renameRicipeId: selectedId,
-          renameRicipeNewName: recipeCaption,
+          ricipeId: selectedId,
+          ricipeNewName: recipeCaption,
+          recipeNewBody: recipeBody
         },
       });
+      setEditMode(false);
     }
-  }, [recipeCaption, recipeBody]);
+  }, [recipeCaption, recipeBody, editMode]);
 
   const headerChange = (caption: string) => setRecipeCaption(caption);
 
