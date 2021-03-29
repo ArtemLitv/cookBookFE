@@ -40,7 +40,11 @@ const RecipeMainHeader: FC<RecipeMainHeaderProps> = (props) => {
   const content = (
     <div className={`recipe-main-header__container ${isEdit && "_hide"}`}>
       <h1 className="recipe-main-header__header">{headerValue}</h1>
-      <button className="recipe-main-header__button" onClick={onEditClick}>
+      <button
+        className="recipe-main-header__button"
+        tabIndex={0}
+        onClick={onEditClick}
+      >
         <PenIcon className="recipe-main-header__icon" width="16" height="16" />
       </button>
     </div>
@@ -55,6 +59,7 @@ const RecipeMainHeader: FC<RecipeMainHeaderProps> = (props) => {
       />
       <button
         className="recipe-main-header__button _no-hide"
+        tabIndex={0}
         onClick={onEditClick}
       >
         <PenIcon className="recipe-main-header__icon" width="16" height="16" />
