@@ -5,7 +5,6 @@ import { RecipeType } from "../models/RecipeType";
 import { RootState } from "../store";
 import RecipeMainBody from "./components/RecipeMainBody/RecipeMainBody";
 import RecipeMainHeader from "./components/RecipeMainHeader/RecipeMainHeader";
-import "./RecipeMain.scss";
 
 const RESIPIE = gql`
     query RESIPE_FULL_DATA($recipeId: ID!) {

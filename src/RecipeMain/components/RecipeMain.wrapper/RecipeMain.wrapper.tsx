@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from "react";
-import RecipeMainBody from "./components/RecipeMainBody/RecipeMainBody";
-import RecipeMainHeader from "./components/RecipeMainHeader/RecipeMainHeader";
+import RecipeMainBody from "../RecipeMainBody/RecipeMainBody";
+import RecipeMainHeader from "../RecipeMainHeader/RecipeMainHeader";
 import "./RecipeMainWrapper.scss";
 
 type RecipeMainWrapperProps = {
