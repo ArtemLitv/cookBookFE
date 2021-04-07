@@ -4,8 +4,7 @@ import { useSelector } from "react-redux";
 import { RecipeType } from "../models/RecipeType";
 import { RootState } from "../store";
 import RecipeMainWrapper, { RecipeMainWrapperStatus, RecipeMainStatus } from "./components/RecipeMain.wrapper/RecipeMain.wrapper";
-import RecipeMainBody from "./components/RecipeMainBody/RecipeMainBody";
-import RecipeMainHeader from "./components/RecipeMainHeader/RecipeMainHeader";
+
 
 const RESIPIE = gql`
     query RESIPE_FULL_DATA($recipeId: ID!) {

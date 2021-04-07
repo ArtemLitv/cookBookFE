@@ -40,24 +40,20 @@ const RecipeMainWrapper: FC<RecipeMainWrapperProps> = (props: RecipeMainWrapperP
     const bodyChange = (body: string) => bodyHandler(body);
     const editHandler = (isEdit: boolean) => editModeHandler(isEdit);
 
-    if (status.type === RecipeMainStatus.START_PAGE) {
-        return <h1 className="recipe-main-wrapper__header">Start Page</h1>;
-    }
 
-    if (status.type === RecipeMainStatus.LOADING) {
-        return <>Loading...</>;
+    switch (status.type) {
+        case RecipeMainStatus.START_PAGE:
+            return <h1 className="recipe-main-wrapper__header">Start Page</h1>;
+        case RecipeMainStatus.LOADING:
+            return <>Loading...</>;
+        case RecipeMainStatus.ERROR:
+            return <>Error</>;
+        default:
+            return <div className="recipe-main-wrapper__wrapper">
+                <RecipeMainHeader header={recipeCaption} headerChange={headerChange} editHandler={editHandler} />
+                <RecipeMainBody body={recipeBody} bodyChange={bodyChange} isEdit={editMode} />
+            </div>
     }
-
-    if (status.type === RecipeMainStatus.ERROR) {
-        return <>Error</>;
-    }
-
-    return (
-        <div className="recipe-main-wrapper__wrapper">
-            <RecipeMainHeader header={recipeCaption} headerChange={headerChange} editHandler={editHandler} />
-            <RecipeMainBody body={recipeBody} bodyChange={bodyChange} isEdit={editMode} />
-        </div>
-    );
 };
 
 export default RecipeMainWrapper;
