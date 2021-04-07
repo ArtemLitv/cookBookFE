@@ -3,6 +3,7 @@ import React, { FC, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RecipeType } from "../models/RecipeType";
 import { RootState } from "../store";
+import RecipeMainWrapper, { RecipeMainWrapperStatus, RecipeMainStatus } from "./components/RecipeMain.wrapper/RecipeMain.wrapper";
 import RecipeMainBody from "./components/RecipeMainBody/RecipeMainBody";
 import RecipeMainHeader from "./components/RecipeMainHeader/RecipeMainHeader";
 
@@ -87,28 +88,24 @@ const RecipeMain: FC<RecipeMainProps> = () => {
 
     const bodyChange = (body: string) => setRecipeBody(body);
 
+    const recipeStatus: RecipeMainWrapperStatus = { 
+        type: RecipeMainStatus.RECIPE
+    };
+
     if (!selectedId) {
-        return <h1 className="recipe-main__header">Start Page</h1>;
+        recipeStatus.type = RecipeMainStatus.START_PAGE;
+    } else if (error) {
+        recipeStatus.type = RecipeMainStatus.ERROR;
+    } else if (loading) {
+        recipeStatus.type = RecipeMainStatus.LOADING;
     }
 
-    if (recipeCaption && body) {
-        return (
-            <div className="recipe-main__wrapper">
-                <RecipeMainHeader
-                    header={recipeCaption}
-                    headerChange={headerChange}
-                    editHandler={editHandler}
-                />
-                <RecipeMainBody
-                    body={recipeBody}
-                    bodyChange={bodyChange}
-                    isEdit={editMode}
-                />
-            </div>
-        );
-    }
-
-    return <>Loading...</>;
+    return <RecipeMainWrapper caption={recipeCaption}
+        body={recipeBody}
+        status={recipeStatus}
+        captionHandler={headerChange}
+        bodyHandler={bodyChange} 
+        editModeHandler={editHandler}/>
 };
 
 export default RecipeMain;

@@ -1,27 +1,31 @@
 import React, { FC, useEffect, useState } from "react";
 import RecipeMainBody from "../RecipeMainBody/RecipeMainBody";
 import RecipeMainHeader from "../RecipeMainHeader/RecipeMainHeader";
-import "./RecipeMainWrapper.scss";
+import "./RecipeMain.wrapper.scss";
 
 type RecipeMainWrapperProps = {
     caption: string;
     body: string;
     status: RecipeMainWrapperStatus;
+    captionHandler: (caption: string) => void;
+    bodyHandler: (body: string) => void;
+    editModeHandler: (isEdit: boolean) => void;
 };
 
-type RecipeMainWrapperStatus = {
+export type RecipeMainWrapperStatus = {
     type: RecipeMainStatus;
     metaInfo?: any;
 };
 
-enum RecipeMainStatus {
+export enum RecipeMainStatus {
     LOADING = "LOADING",
     ERROR = "ERROR",
     START_PAGE = "START_PAGE",
+    RECIPE = 'RECIPE'
 }
 
 const RecipeMainWrapper: FC<RecipeMainWrapperProps> = (props: RecipeMainWrapperProps) => {
-    const { caption, body, status } = props;
+    const { caption, body, status, captionHandler, bodyHandler, editModeHandler } = props;
 
     const [recipeCaption, setRecipeCaption] = useState(caption);
     const [recipeBody, setRecipeBody] = useState(body);
@@ -32,11 +36,9 @@ const RecipeMainWrapper: FC<RecipeMainWrapperProps> = (props: RecipeMainWrapperP
         setRecipeBody(body);
     }, [caption, body]);
 
-    const headerChange = (caption: string) => setRecipeCaption(caption);
-
-    const editHandler = (isEdit: boolean) => setEditMode(isEdit);
-
-    const bodyChange = (body: string) => setRecipeBody(body);
+    const headerChange = (caption: string) => captionHandler(caption);
+    const bodyChange = (body: string) => bodyHandler(body);
+    const editHandler = (isEdit: boolean) => editModeHandler(isEdit);
 
     if (status.type === RecipeMainStatus.START_PAGE) {
         return <h1 className="recipe-main-wrapper__header">Start Page</h1>;
