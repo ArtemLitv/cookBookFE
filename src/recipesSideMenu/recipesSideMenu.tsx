@@ -3,6 +3,9 @@ import { gql, useQuery } from "@apollo/client";
 import RecipeSideMenu from "./components/recipeSideMenu/recipeSideMenu";
 import "./recipesSideMenu.scss";
 import { RecipeType } from "../models/RecipeType";
+import { createNewRecipe } from "../slicers/menu.slice";
+import { useDispatch } from "react-redux";
+import { changeMode } from "../slicers/editMode.slice";
 
 const ALL_RECIPES = gql`
     query Query {
@@ -21,9 +24,11 @@ type RecipesProps = {};
 
 const RecipesSideMenu: FC<RecipesProps> = () => {
     const { data, loading, error } = useQuery(ALL_RECIPES);
+    const dispatch = useDispatch();
 
     const addClickHandler = useCallback(() => {
-        console.log("add click");
+        dispatch(createNewRecipe());
+        dispatch(changeMode(true));
     }, []);
 
     return (

@@ -17,10 +17,13 @@ export const menuSlice = createSlice({
     select: (state, action: PayloadAction<string>) => {
       state.id = action.payload;
     },
+    createNewRecipe: (state) => {
+      state.id = 'NEW';
+    }
   }
 })
 
 // Action creators are generated for each case reducer function
-export const { select } = menuSlice.actions
+export const { select, createNewRecipe } = menuSlice.actions
 
 export default menuSlice.reducer

@@ -87,12 +87,14 @@ const RecipeMain: FC<RecipeMainProps> = () => {
 
     const bodyChange = (body: string) => setRecipeBody(body);
 
-    const recipeStatus: RecipeMainWrapperStatus = { 
+    const recipeStatus: RecipeMainWrapperStatus = {
         type: RecipeMainStatus.RECIPE
     };
 
     if (!selectedId) {
         recipeStatus.type = RecipeMainStatus.START_PAGE;
+    } else if (selectedId === 'NEW') {
+        recipeStatus.type = RecipeMainStatus.NEW_PAGE;
     } else if (error) {
         recipeStatus.type = RecipeMainStatus.ERROR;
     } else if (loading) {
@@ -103,8 +105,8 @@ const RecipeMain: FC<RecipeMainProps> = () => {
         body={recipeBody}
         status={recipeStatus}
         captionHandler={headerChange}
-        bodyHandler={bodyChange} 
-        editModeHandler={editHandler}/>
+        bodyHandler={bodyChange}
+        editModeHandler={editHandler} />
 };
 
 export default RecipeMain;

@@ -6,14 +6,15 @@ import "./RecipeMainHeader.scss";
 
 type RecipeMainHeaderProps = {
   header: string;
+  editMode?: boolean;
   headerChange: (header: string) => void;
   editHandler: (isEdit: boolean) => void;
 };
 
 const RecipeMainHeader: FC<RecipeMainHeaderProps> = (props) => {
-  const { header, headerChange, editHandler } = props;
+  const { header, editMode, headerChange, editHandler } = props;
   const [headerValue, setHeaderValue] = useState(header);
-  const [isEdit, setIsEdit] = useState(false);
+  const [isEdit, setIsEdit] = useState(!!editMode);
 
   const dispatch = useDispatch();
 

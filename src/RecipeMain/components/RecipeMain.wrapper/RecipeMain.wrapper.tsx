@@ -18,9 +18,10 @@ export type RecipeMainWrapperStatus = {
 };
 
 export enum RecipeMainStatus {
-    LOADING = "LOADING",
-    ERROR = "ERROR",
-    START_PAGE = "START_PAGE",
+    LOADING = 'LOADING',
+    ERROR = 'ERROR',
+    START_PAGE = 'START_PAGE',
+    NEW_PAGE = 'NEW_PAGE',
     RECIPE = 'RECIPE'
 }
 
@@ -48,6 +49,12 @@ const RecipeMainWrapper: FC<RecipeMainWrapperProps> = (props: RecipeMainWrapperP
             return <>Loading...</>;
         case RecipeMainStatus.ERROR:
             return <>Error</>;
+        case RecipeMainStatus.NEW_PAGE:
+            // setEditMode(true);
+            return <div className="recipe-main-wrapper__wrapper">
+                <RecipeMainHeader header={''} headerChange={headerChange} editHandler={editHandler} editMode={true}/>
+                <RecipeMainBody body={recipeBody} bodyChange={bodyChange} isEdit={true} />
+            </div>
         default:
             return <div className="recipe-main-wrapper__wrapper">
                 <RecipeMainHeader header={recipeCaption} headerChange={headerChange} editHandler={editHandler} />
